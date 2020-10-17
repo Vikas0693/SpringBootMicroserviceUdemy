@@ -4,8 +4,12 @@ import java.net.URI;
 import java.nio.file.attribute.UserPrincipalNotFoundException;
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -36,12 +40,19 @@ public class UserResource {
 	}
 	
 	@PostMapping("/users")
-	public ResponseEntity<Object> createUser(@RequestBody User user) {
+	public ResponseEntity<Object> createUser(@Valid @RequestBody User user) {
 		User savedUser = service.save(user);
 		URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(savedUser.getId()).toUri();
 		
 		return ResponseEntity.created(location).build();
 		//beelow is when we want to send user in response too
 		//return ResponseEntity.created(location).body(savedUser);
+	}
+	
+	@DeleteMapping("/users/{id}")
+	public void deleteUser(@PathVariable int id) {
+		User user = service.deleteById(id);
+		if(user == null)
+			throw new UserNotFoundException("id-"+id);
 	}
 }
