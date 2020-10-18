@@ -58,7 +58,13 @@
 		    <groupId>org.springframework.boot</groupId>
 		    <artifactId>spring-boot-starter-hateoas</artifactId>
 	    </dependency>
-
+		<!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.dataformat/jackson-dataformat-xml -->
+		<dependency>
+		    <groupId>com.fasterxml.jackson.dataformat</groupId>
+		    <artifactId>jackson-dataformat-xml</artifactId>
+		    <!--Spring boot will decide the version -->
+   		    <!-- <version>2.11.1</version> -->
+		</dependency>
 	</dependencies>
 
 	<build>
