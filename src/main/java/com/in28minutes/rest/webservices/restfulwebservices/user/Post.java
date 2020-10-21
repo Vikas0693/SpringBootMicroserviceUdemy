@@ -8,6 +8,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 public class Post {
 	@Id
@@ -21,6 +23,7 @@ public class Post {
 	//it will fetch Post which again will try to fetch User hence the infinite loop
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="user_ki_id")
+	@JsonIgnore//we dont want user details in post object as it will create recursive loop
 	private User user;
 	//@Column(name="userId",insertable=false,updatable=false)
 	//private Integer userId;
