@@ -1,6 +1,8 @@
 package com.in28minutes.rest.webservices.restfulwebservices.exception;
 
+import java.util.Arrays;
 import java.util.Date;
+import java.util.stream.Stream;
 
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -19,13 +21,17 @@ public class CustomizedResponseEntityExceptionHandler extends ResponseEntityExce
 
 	@ExceptionHandler(Exception.class)
 	public final ResponseEntity<Object> handleAllException(Exception ex, WebRequest request) throws Exception {
-		System.err.println("Exception Occurred : "+ex.getStackTrace().toString());
+		StackTraceElement stacks[] = ex.getStackTrace();
+		Stream<StackTraceElement> s = Arrays.stream(stacks);
+		s.forEach(stack -> System.out.println(stack.getClassName()+" - "+stack.getMethodName()+" - "+stack.getLineNumber()));
+		//System.err.println("Exception Occurred : "+ex.getStackTrace().toString()+""+ex.);
 		ExceptionResponse exceptionResponse = new ExceptionResponse(new Date(), ex.getMessage(), request.getDescription(false));
 		return new ResponseEntity(exceptionResponse, HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 	
 	@ExceptionHandler(UserNotFoundException.class)
 	public final ResponseEntity<Object> handleUserNotFoundException(UserNotFoundException ex, WebRequest request) throws Exception {
+		System.out.println("112333333333333+UserNotFoundException-");
 		ExceptionResponse exceptionResponse = new ExceptionResponse(new Date(), ex.getMessage(), request.getDescription(false));
 		return new ResponseEntity(exceptionResponse, HttpStatus.NOT_FOUND);
 	}
@@ -36,6 +42,7 @@ public class CustomizedResponseEntityExceptionHandler extends ResponseEntityExce
 	@Override
 	protected ResponseEntity<Object> handleMethodArgumentNotValid(
 			MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
+		System.out.println("112333333333333+handleMEthodArgumentValid exception");
 		//in below field is property variable name on validity fails as in User object our name fails if passed as 'as' 
 		ExceptionResponse exceptionResponse = new ExceptionResponse(new Date(), ex.getBindingResult().getFieldError().getDefaultMessage(), "Method Arguments are not valid.");
 		return new ResponseEntity<Object>(exceptionResponse, HttpStatus.BAD_REQUEST);

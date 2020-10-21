@@ -23,10 +23,9 @@ public class Post {
 	//it will fetch Post which again will try to fetch User hence the infinite loop
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="user_ki_id")
-	@JsonIgnore//we dont want user details in post object as it will create recursive loop
+	//we dont want user details in post object as it will create recursive loop & throws 'Could not write JSON: Infinite recursion '
+	@JsonIgnore
 	private User user;
-	//@Column(name="userId",insertable=false,updatable=false)
-	//private Integer userId;
 	public Integer getId() {
 		return id;
 	}
@@ -53,6 +52,6 @@ public class Post {
 	}*/
 	@Override
 	public String toString() {
-		return "Post [id=" + id + ", description=" + description + ", user=" + user + "]";
+		return "Post [id=" + id + ", description=" + description + "]";
 	}
 }
