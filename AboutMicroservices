@@ -1,5 +1,8 @@
-Process Followed in building this microservice
+Process Followed in building this microservice architecture
+A)Spring Config Server
 1)Each microservice have its own configuration and different no of env.
 2)one microservice can have 1-Dev,1-QA,2-Stage,1-Prod while another have 1-Dev,2-QA,2-Stage,5-Prod
 3)Even one microservice can have multiple instances of it running simultaneously
 4)To handle point 1,2,3 we will use spring cloud config server which stays on git as centralized repo and helps to configure each microservices
+B)Api Gateways(Using ZUUL)
+1)Does authorization & authentication & SECURITY ,Fault Tolerance,Service Aggregation(combining many microservices result into one),Rate Limits(Max no. of req per user per hr)
