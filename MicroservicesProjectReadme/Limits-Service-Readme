@@ -1,0 +1,6 @@
+Contains - contains web,devtools,actuator,config client,eureka-client
+PROJECT README
+Working
+1)Make sure spring cloud config server is running on http://localhost:8888 as we have set this in bootstrap.properties
+2)Run this project and look for 'Fetching config from server at : http://localhost:8888' in logs.All configs should get loaded
+3)Registering this service to eureka microservice

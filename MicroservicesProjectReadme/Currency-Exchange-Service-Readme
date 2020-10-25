@@ -1,0 +1,7 @@
+Contains - containes devtools,web,confg-client,eureka-client
+PROJECT README
+1)This microservice is consumed by currency exchange conversion microservice
+2)different instances of this app is deployed using '-Dserver.port=8001' where port is diff. for each instance
+3)To configure -Dserver.port go to Run Configurations in eclipse and under arguments add same to VM Arguments
+4)Created JPA Repository
+5)Registering this microservice with eureka client

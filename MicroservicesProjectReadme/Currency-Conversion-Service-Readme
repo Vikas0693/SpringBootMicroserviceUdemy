@@ -1,0 +1,17 @@
+Contains - contains devtools,web,config-client,eureka-client,ribbon(to get urls of currency-exchange-service instances from eureka),openfeign(to make restful calls)
+PROJECT README
+1)Setting basic rest url invocation using RestTemplate
+2)Invocation of REST api through feign to talk to other microservices
+3)Added Feign Annotation in Main Class
+4)created feign proxy interface named 'CurrencyExchangeServiceProxy' to handle all request to currency-exchange microservice
+5)So its easy to handle all calls to particualar microservice at one place or at one interface in our case
+6)In @FeignClient we are using uri which is static url.But what if there are three instances of currency-exchange-services are running at same time.We will see how to distribute load among those three services using Ribbon(to dynamically decide url of each service of currency-exchange-service).
+7)Why do we need eureka(as naming server) when we have ribbon already - in ribbon config property we have set 'currency-exchange-service.ribbon.listOfServers' to static list of servers but think if we want dynamic scale up/down then we don't want to add them or remove them from listOfServers.Hence we will use Eureka which gives dynamic urls to Ribbon.
+8)Eureka naming server is another microservice(can be think of as centralized service) which sends url's of all instances of particular microservice which the calling microservice want.In our case currency-conversion-service will ask for all urls to currency-exchange-service microservices.
+9)In Eureka each microservice will register all of its urls which is called service registration.Also when one microservice require all url's to another microservice this process is called service discovery.  
+10)Add dependency to eureka for service registration.
+11)'eureka.client.service-url.default-zone' in properties will register this microservice with eureka server.
+12)We can create as many instances with '-Dserver.port=port' and get it register with eureka automatically, using(11)point above
+13)Added exclusion property for jackson.dataformat.xml as netflix-eureka-client uses that which will by default put our responses in xml format.
+14)we have commented list of static urls in ribbon-property in app.properties.So from where are we getting url of currency-exchange-service.We are getting that using RibbonClient annotation which has application name as 'currency-exchange-name'.So ribbon goes and ask eureka for url which is related to this application Name.
+15)Remember to use rest-controller which has url as 'currency-converter-feign' which uses feign application.name to send request to another microservice.Only this url helps in dynamic scaling as other url has static link to currency-exchange-service.

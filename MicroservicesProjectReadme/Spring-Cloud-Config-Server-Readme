@@ -1,0 +1,8 @@
+Contains - contains devtools,config server
+PROJECT README
+1)Diff env files for each microservice.For eg for microservice : limits-service we have 3 config prop files
+2)these files reside on git whose repo url is specified in app.prop as spring.cloud.config.server.git.uri
+3)For each config prop we can access it at url : http://localhost:8888/limits-service/qa, http://localhost:8888/limits-service/dev, http://localhost:8888/limits-service/default 
+4)Till now spring cloud config server was picking up configuration from local git repo.Now we will make use of config server to be used in limits-service microservice.
+5)On connecting limits-service with spring-cloud-config-server , config server will pass highest priority configs.What we meant is when we hit http://localhost:8888/limits-service/qa
+two config are showed one for qa and another for default.If some config are not present in qa properties file then those will be picked up from default properties file.

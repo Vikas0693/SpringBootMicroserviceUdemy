@@ -1,0 +1,6 @@
+Projects Created as Microservices
+1)Limits Service - contains web,devtools,actuator,config client
+2)Cloud Config - contains devtools,config server.
+3)Currency-Exchange-Service - containes devtools,web,confg-client,eureka-client
+4)Currency-Conversion-Service - contains devtools,web,config-client,eureka-client,ribbon(to get urls of currency-exchange-service instances from eureka),openfeign(to make restful calls)
+5)Netflix-eureka-Naming-server - eureka(All microservices register themselves with eureka), config-client, actuator
