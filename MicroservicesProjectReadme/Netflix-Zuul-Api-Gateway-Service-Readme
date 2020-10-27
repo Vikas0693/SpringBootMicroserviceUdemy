@@ -1,3 +1,4 @@
+Contains - Zuul,Eureka Discovery,Actuator,Dev Tools
 To make request go through zuul api gateway we have to follow below uri structure
 http://localhost:port/{application-name of called uri}/{resource uri}
 For eg to call http://localhost:8000//currency-exchange/from/USD/to/INR we need to make a call on zuul as below
@@ -9,3 +10,5 @@ http://localhost:8765/currency-conversion-service/currency-converter-feign/from/
 
 1)A good idea is to send every request from microservice to microservice to go through zuul for the purpose of loggin and tracking request's and its response.For that we will update FeignClient with zuul's application name in currency-conversion-service from proxy class
 2)Also we have to append applicationname at front of every url as that call will be made to zuul.
+3)Added Spring-cloud-sleuth dependency and its bean in main class to trace request and add common id to that request so that debugger can trace that req. accross all microservices
+4)

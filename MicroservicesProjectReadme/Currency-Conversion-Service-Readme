@@ -15,3 +15,4 @@ PROJECT README
 13)Added exclusion property for jackson.dataformat.xml as netflix-eureka-client uses that which will by default put our responses in xml format.
 14)we have commented list of static urls in ribbon-property in app.properties.So from where are we getting url of currency-exchange-service.We are getting that using RibbonClient annotation which has application name as 'currency-exchange-name'.So ribbon goes and ask eureka for url which is related to this application Name.
 15)Remember to use rest-controller which has url as 'currency-converter-feign' which uses feign application.name to send request to another microservice.Only this url helps in dynamic scaling as other url has static link to currency-exchange-service.
+16)Added Spring-cloud-sleuth and its bean in main class to trace request and add common id to that request so that debugger can trace that req. accross all microservices

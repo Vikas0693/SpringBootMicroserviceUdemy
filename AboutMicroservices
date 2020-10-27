@@ -4,5 +4,30 @@ A)Spring Config Server
 2)one microservice can have 1-Dev,1-QA,2-Stage,1-Prod while another have 1-Dev,2-QA,2-Stage,5-Prod
 3)Even one microservice can have multiple instances of it running simultaneously
 4)To handle point 1,2,3 we will use spring cloud config server which stays on git as centralized repo and helps to configure each microservices
+
 B)Api Gateways(Using ZUUL)
 1)Does authorization & authentication & SECURITY ,Fault Tolerance,Service Aggregation(combining many microservices result into one),Rate Limits(Max no. of req per user per hr)
+2)Now every call that end user make or one microservie make to another microservice that call goes through api gateway.But how?
+2.1)zuul has enableDiscoveryClient and default-zone property set in app.properties to tell eureka that this is one of the many microservices.
+2.2)So whenever we make a call to http://zuulhostname:port/{applicationname}/uriresource the request goes to microservice that has passed applicationame.
+2.3)so we make sure that even from microservice a rest call to another microservice should be made through zull api gateway.We Ensured this by updating FeignClient in 'currency-exchange-service' with zuul applicationname and updated all url to have their application name in their uri also.
+
+C)Zipkin And RabbitMQ
+1)All calls to microservice will go through api gateway as discusse in point B.
+2)From Api gateway we will make request and response logged to zipkin using rabbitMQ.
+3)Other alternatives to zipkin is logstash,kibana.
+4)To Install RabbitMq go to eabbitmq.com and click recommended version for windows installer and then on next page it says rabbitmq require earlang to work.
+5)To install earlang go to either of links shown there or go to 'https://www.erlang.org/downloads/' and download latest version.
+6)There will be a GitHub link to install rabbitMq installer on windows
+
+RabbitMq
+1)rabbitmq-plugins.bat enable rabbitmq_management - for ui management of rabbitmq
+2)Following are some imp. cmd commands(to be run in sbin folder of rabbitmq) - rabbitmqctl.bat status,remove,install,start
+3)4)To add RabbitMq to dependencies add - artifactId-'org.springframework.amqp' and groupId-'spring-rabbit'
+
+Zipkin
+1)We cannot install zipkin from spring initializer because it has been removed because of conflict of zipkin stream server with sleuth.So we will manually configure our project to support zipkin server.
+2)Download zipkin jar from official site 'https://zipkin.io/pages/quickstart' and run java -jar zipkin.jar
+3)to run zipkin with rabbitMq on windows run set RABBIT_MQ=amqp://localhost java -jar zipkin.jar and make sure it does not throws any exceptions
+4)To add zipkin to dependencies add - 'spring-cloud-starter-zipkin'
+5)Run all microservices and got 'localhost:9411/zipkin' and enter service name in it and make a request to that service and trace the request successfully.
