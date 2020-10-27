@@ -4,7 +4,10 @@ A)Spring Config Server
 2)one microservice can have 1-Dev,1-QA,2-Stage,1-Prod while another have 1-Dev,2-QA,2-Stage,5-Prod
 3)Even one microservice can have multiple instances of it running simultaneously
 4)To handle point 1,2,3 we will use spring cloud config server which stores config files on git as centralized repo and fetches them at runtime and helps to configure each microservices
-5)Whenever there is config changes for limits-service in spring-cloud-config-server those changes are not picked up by limit-srvice microservice at runtime.To do that we will use spring cloud bus
+5)Whenever there is config changes for limits-service in spring-cloud-config-server those changes are not picked up by limit-srvice microservice at runtime.To do that we will use spring cloud bus which is nothing but a rabbitMQ or Kafka
+6)We add dependency of cloud-amqp-bus in spring-cloud-config-server and in all those microservices whose config we want to update at runtime
+7)Call http://localhost:8080//actuator/bus-refresh using post on any one of the microservice whose config we want to update.And then config for all microservices will get changed automatically.
+So this app has no scalable issue. 
 
 B)Api Gateways(Using ZUUL)
 1)Does authorization & authentication & SECURITY ,Fault Tolerance,Service Aggregation(combining many microservices result into one),Rate Limits(Max no. of req per user per hr)
@@ -24,7 +27,7 @@ C)Zipkin And RabbitMQ
 RabbitMq
 1)rabbitmq-plugins.bat enable rabbitmq_management - for ui management of rabbitmq
 2)Following are some imp. cmd commands(to be run in sbin folder of rabbitmq) - rabbitmqctl.bat status,remove,install,start
-3)4)To add RabbitMq to dependencies add - artifactId-'org.springframework.amqp' and groupId-'spring-rabbit'
+3)To add RabbitMq to dependencies add - artifactId-'org.springframework.amqp' and groupId-'spring-rabbit'
 
 Zipkin
 1)We cannot install zipkin from spring initializer because it has been removed because of conflict of zipkin stream server with sleuth.So we will manually configure our project to support zipkin server.

@@ -5,3 +5,6 @@ Working
 2)Run this project and look for 'Fetching config from server at : http://localhost:8888' in logs.All configs should get loaded
 3)Registering this service to eureka microservice
 4)Whenever there is config changes for limits-service in spring-cloud-config-server those changes are not picked up by this server at runtime.To do that we will use spring cloud bus
+5)We add dependency of cloud-amqp-bus in spring-cloud-config-server and in all those microservices whose config we want to update at runtime
+6)Call http://localhost:8080//actuator/bus-refresh using post on any one of the microservice whose config we want to update.And then config for all microservices will get changed automatically.
+So this app has no scalable issue. 
