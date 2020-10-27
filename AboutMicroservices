@@ -35,3 +35,9 @@ Zipkin
 3)to run zipkin with rabbitMq on windows run set RABBIT_MQ=amqp://localhost java -jar zipkin.jar and make sure it does not throws any exceptions
 4)To add zipkin to dependencies add - 'spring-cloud-starter-zipkin'
 5)Run all microservices and got 'localhost:9411/zipkin' and enter service name in it and make a request to that service and trace the request successfully.
+
+Fault Tolerence Using Hystrix
+1)Depends on starter-web and starter-netflix-hystrix libs.
+2)when one microservice breaks in a chain then the whole system goes down.To send response so that calling microservice can handle the error successfully we use hystrix.
+3)Added hystrix to this project which is fault tolerant mechanism which basically calls another method when one controller fails(controller -> 'fault-tolerence-example') to prevent complete microservice chain call from failing.
+4)For hystrix added @EnableHystrix in main class and @HystrixCommand(fallbackmethod) in controller to add fallback method

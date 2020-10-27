@@ -8,3 +8,5 @@ Working
 5)We add dependency of cloud-amqp-bus in spring-cloud-config-server and in all those microservices whose config we want to update at runtime
 6)Call http://localhost:8080//actuator/bus-refresh using post on any one of the microservice whose config we want to update.And then config for all microservices will get changed automatically.
 So this app has no scalable issue. 
+7)Added hystrix to this project which is fault tolerant mechanism which basically calls another method when one controller fails(controller -> 'fault-tolerence-example') to prevent complete microservice chain call from failing.
+8)For hystrix added @EnableHystrix in main class and @HystrixCommand(fallbackmethod) in controller to add fallback method
